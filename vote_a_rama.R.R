@@ -1,6 +1,6 @@
 library(tidyverse)
 
-#this data is located here: https://www.ou.edu/carlalbertcenter/research/pipc-votes
+#this data is located here: https://www.ou.edu/carlalbertcenter/research/pipc-votes -- it was downloaded on April 21
 #Thanks to Sarah Binder for tipping me off to it, It's a collection of ALL Senate votes back to 1969!
 #before reading in, I highlighted all columns and then deselected the ones with data before deleting the whitespace, to make sure there were no extra columns when read into R
 
@@ -66,13 +66,21 @@ multi_bill_vote <- amendment_bill %>%
 joined <- list(multi_bill_vote, amendment_cong, amendment_total, bill_passage, bill_passage_by_cong) %>% 
   reduce(left_join, by = "cong")
 
-#looking at the percentage of bills that ultimately passed to bills that were amended. 
-joined_and_matched <- joined %>%
-  mutate( percent_bills_w_amend_votes = (count_amend_bills_by_congress / count_all_bills))
+
+#Write csvs for my findings:
+
+write_csv(bill_vote, "number_bills_with_with_amend_votes_by_congress.csv")
+write_csv(multi_bill_vote, "number_bills_over_5_amendment_votes_by_congress.csv")
+write_csv(amendment_votes, "all_votes_on_amendments.csv")
+
+write_csv(joined, "findings_on_amendment_votes.csv")
+
+
+
+# These are exploratory graphics ------ I didn't delete them. ------
+
 
 # so some percentages were above 1. Is this a mistake on my part, or something else?
-
-
 
 
 # Basic scatter plot of total amendments by congress // Binder's was by year 
@@ -90,11 +98,3 @@ ggplot(multi_bill_vote, aes(x=cong, y=multi_count)) +
 ggplot(data = multi_bill_vote, aes(x=cong, y=multi_count)) + 
   geom_bar(stat="identity") 
 
-
-#Write csvs for my findings:
-
-write_csv(bill_vote, "number_bills_with_with_amend_votes_by_congress.csv")
-write_csv(multi_bill_vote, "number_bills_over_5_amendment_votes_by_congress.csv")
-write_csv(amendment_votes, "all_votes_on_amendments.csv")
-
-write_csv(joined, "findings_on_amendment_votes.csv")
