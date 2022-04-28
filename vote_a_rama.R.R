@@ -1,7 +1,7 @@
 library(tidyverse)
 
 #this data is located here: https://www.ou.edu/carlalbertcenter/research/pipc-votes -- it was downloaded on April 21....
-#Thanks to Sarah Binder for tipping me off to it, It's a collection of ALL Senate votes back to 1969!
+#Thanks to Sarah Binder for tipping me off to the data, It's a collection of ALL Senate votes back to 1969!
 #before reading in, I highlighted all columns and then deselected the ones with data before deleting the whitespace, to make sure there were no extra columns when read into R
 
 #tried to go through and skip the columns i don't need and force the other columns to the type I'd like them to be.
